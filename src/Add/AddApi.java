@@ -15,6 +15,10 @@ public class AddApi {
 	public static void main(String[] args) {
 		RestAssured.baseURI = "https://rahulshettyacademy.com";
 		InputBodyContent inputBodyContent = new InputBodyContent();
+		
+		/**
+		 * Add Place API
+		 */
 		String responses = given().queryParam("key", "qaclick123").header("Content-Type", "application/json")
 				.body(inputBodyContent.addApiInputBody()).when().post("/maps/api/place/add/json").then().assertThat()
 				.statusCode(200).body("scope", equalTo("APP")).header("Server", "Apache/2.4.18 (Ubuntu)").extract()
@@ -25,7 +29,7 @@ public class AddApi {
 		System.out.println(place_id);
 
 		/**
-		 * Update Place
+		 * Update Place API
 		 */
 
 		String update_response = given().queryParam("key", "qaclick123").header("Content-Type", "application/json")
