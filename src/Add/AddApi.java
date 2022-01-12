@@ -41,7 +41,7 @@ public class AddApi {
 		System.out.println(expectedMessage);
 
 		/**
-		 * Get Place
+		 * Get Place API
 		 */
 
 		String get_response = given().log().all().queryParam("key", "qaclick123").queryParam("place_id", place_id)
