@@ -41,13 +41,12 @@ public class AddApi {
 		System.out.println(expectedMessage);
 
 		/**
-		 * Get Place
+		 * Get Place API
 		 */
 
 		String get_response = given().log().all().queryParam("key", "qaclick123").queryParam("place_id", place_id)
 				.when().get("maps/api/place/get/json").then().assertThat().statusCode(200).extract().response()
 				.asString();
-//		JsonPath getJsonPath = new JsonPath(get_response);
 		JsonPath getJsonResponse = RawToJson.rawToJson(get_response);
 		String getResponse = getJsonResponse.getString("address");
 		System.out.println(getResponse);
