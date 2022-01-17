@@ -3,6 +3,8 @@ package ComplexJsonParse;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.testng.Assert;
+
 import InputBodyContent.InputBodyContent;
 import io.restassured.path.json.JsonPath;
 
@@ -70,8 +72,10 @@ public class ComplexJsonParse {
 			finalPrice = finalPrice + (coursePrice * copiesSold);
 		}
 		System.out.println("All courses final price is: "+finalPrice);
-		if(finalPrice == purchaseAmount) {
-			System.out.println("Final Price and Purchase Amount is equal");
+		try {
+			Assert.assertEquals(purchaseAmount, finalPrice);
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
 
