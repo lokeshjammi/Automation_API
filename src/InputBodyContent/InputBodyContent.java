@@ -60,7 +60,9 @@ public class InputBodyContent extends AddApi {
 				+ "\r\n"
 				+ "]\r\n"
 				+ "\r\n"
-				+ "}";
+				+ "}\r\n"
+				+ "\r\n"
+				+ "";
 	}
 
 }
