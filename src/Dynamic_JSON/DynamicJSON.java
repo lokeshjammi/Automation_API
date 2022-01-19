@@ -1,6 +1,7 @@
 package Dynamic_JSON;
 
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import RawToJson.RawToJson;
@@ -11,11 +12,11 @@ import static io.restassured.RestAssured.*;
 
 public class DynamicJSON {
 
-	@Test(priority = 1)
-	public void addBook() {
+	@Test(priority = 1, dataProvider = "BooksData")
+	public void addBook(String bookName, String isbn, String aisle) {
 		RestAssured.baseURI = "http://216.10.245.166";
 		String addResponse = given().header("Content-Type", "application/json")
-				.body(DynamicJSONInputBody.addBookApi("hij", "511")).when().post("/Library/Addbook.php").then()
+				.body(DynamicJSONInputBody.addBookApi(bookName, isbn, aisle)).when().post("/Library/Addbook.php").then()
 				.assertThat().statusCode(200).extract().response().asString();
 		System.out.println(addResponse);
 		JsonPath addJsonResponse = RawToJson.rawToJson(addResponse);
@@ -48,5 +49,10 @@ public class DynamicJSON {
 			// TODO: handle exception
 			System.out.println(e);
 		}
+	}
+
+	@DataProvider(name = "BooksData")
+	public Object[][] getData() {
+		return new Object[][] { { "Lokesh", "Lok", "789" }, { "Jammi", "Jam", "360" } };
 	}
 }
