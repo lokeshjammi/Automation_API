@@ -11,12 +11,12 @@ import static io.restassured.RestAssured.*;
 
 public class DynamicJSON {
 
-	@Test
+	@Test(priority = 1)
 	public void addBook() {
-		RestAssured.baseURI = "http://216.10.245.166/";
-
-		String addResponse = given().header("Content-Type", "application/json").body(DynamicJSONInputBody.addBookApi())
-				.when().post("Library/Addbook.php").then().assertThat().statusCode(200).extract().response().asString();
+		RestAssured.baseURI = "http://216.10.245.166";
+		String addResponse = given().header("Content-Type", "application/json")
+				.body(DynamicJSONInputBody.addBookApi("hij", "511")).when().post("/Library/Addbook.php").then()
+				.assertThat().statusCode(200).extract().response().asString();
 		System.out.println(addResponse);
 		JsonPath addJsonResponse = RawToJson.rawToJson(addResponse);
 		System.out.println(addJsonResponse);
@@ -29,5 +29,24 @@ public class DynamicJSON {
 			System.out.println(e);
 		}
 		System.out.println(actualID);
+		String deleteBody = DynamicJSONInputBody.deleteBookApi(actualID);
+		deleteBook(deleteBody);
+	}
+
+	public void deleteBook(String deleteBody) {
+		String deleteResponse = given().log().all().body(deleteBody).when().post("/Library/DeleteBook.php").then().log()
+				.all().assertThat().statusCode(200).extract().response().asString();
+		System.out.println(deleteResponse);
+		JsonPath deleteJson = RawToJson.rawToJson(deleteResponse);
+		System.out.println(deleteJson);
+		String expectedMessage = "book is successfully deleted";
+		String actualMessage = deleteJson.getString("msg");
+		try {
+			Assert.assertEquals(actualMessage, expectedMessage);
+			System.out.println("Book deleted successfully");
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
 	}
 }
