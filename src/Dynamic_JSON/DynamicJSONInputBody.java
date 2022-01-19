@@ -2,9 +2,9 @@ package Dynamic_JSON;
 
 public class DynamicJSONInputBody {
 
-	public static String addBookApi(String isbn, String aisle) {
-		String addBookBody = "{\r\n" + "\"name\":\"Learn Automation\",\r\n" + "\"isbn\":\"" + isbn + "\",\r\n"
-				+ "\"aisle\":\"" + aisle + "\",\r\n" + "\"author\":\"Lokesh foe\"\r\n" + "}";
+	public static String addBookApi(String bookName, String isbn, String aisle) {
+		String addBookBody = "{\r\n" + "\"name\":\"" + bookName + "\",\r\n" + "\"isbn\":\"" + isbn + "\",\r\n"
+				+ "\"aisle\":\"" + aisle + "\",\r\n" + "\"author\":\"Lokesh\"\r\n" + "}";
 		return addBookBody;
 	}
 
